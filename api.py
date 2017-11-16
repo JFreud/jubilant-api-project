@@ -1,5 +1,5 @@
 #from flask import Flask, render_template
-import urllib2, json, requests
+import requests, json
 
 #henry zheng account
 
@@ -7,15 +7,12 @@ def get_songs(user):
     url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + user + "&api_key=9ec1ef2aeee03ef02b3158df6967d577&format=json"
     lastfm = requests.get(url)
 
-    # lastfm = urllib2.urlopen(url)
     dL = json.loads(lastfm.text)
     dL_lovedtracks = dL['lovedtracks']
     dL_track = dL_lovedtracks['track']
     retList = []
 
-
     #print r.text
-
 
     for track in dL_track:
         dict = {}
@@ -32,27 +29,25 @@ api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080
 
 def get_song_id(track, artist):
     url = api_base.format("track.search", "q_track={0}&q_artist={1}&page_size=5&page=1&s_track_rating=desc".format(track.replace(" ", "%20"), artist.replace(" ", "%20")))
-    #u = urllib2.urlopen(url)
-    #msg = u.read()
     msg = requests.get(url)
     search_dict = json.loads(msg.text)
     if search_dict["message"]["body"]["track_list"] == []:
-        return '0'
+        return None
     return search_dict["message"]["body"]["track_list"][0]["track"]["track_id"]
 
 def get_lyrics(track_id):
     url = api_base.format("track.lyrics.get","track_id={}".format(track_id))
-    # u = urllib2.urlopen(url)
-    # msg = u.read()
-    #print msg
     msg = requests.get(url)
     lyrics_dict = json.loads(msg.text)
     if lyrics_dict["message"]["body"] == []:
-        return '0'
+        return None
     body = lyrics_dict["message"]["body"]["lyrics"]["lyrics_body"]
+    #body.split("*")
+    #print body
 
+    
     if body == "":
-        return '0'
+        return None
     else:
         return body
 
@@ -65,35 +60,20 @@ def get_lyrics_all():
     retList = get_songs(user_info)
     for song in retList:
         lyrics = get_lyrics(get_song_id(song['dL_name'], song['dL_artist']))
-        '''
-        if 'lyrics' in song.keys():# or lyrics == None:
-            del retList[retList.index(song)]
-        else:
-            song['lyrics'] = lyrics
-        '''
         song['lyrics'] = lyrics
-    #'''
-    print len(retList)-1
-
-    # for x in range(0,len(retList)-1):
-    #     if retList[0]['lyrics'] == '0':
-    #         print x
-    #         print retList[x]
-    #         del retList[x]
-    #     print "***" + str(x) + "***"
-    # #'''
 
     i = 0
     while (i < len(retList)):
-        if retList[i]['lyrics'] == '0':#iterates through list and if no lyrics removes it; does not increment because it moves to next automatically through deletion
-            #print "\nZERO\n"
+        if retList[i]['lyrics'] is None:#iterates through list and if no lyrics removes it; does not increment because it moves to next automatically through deletion
             del retList[i]
         else:
-            #print "\n***" + str(i) + "***\n"
+            retList[i]['lyrics'] = retList[i]['lyrics'].split("*")[0]
+            #print retList[i]['lyrics']
             i += 1
+            
     return retList
 
-print get_lyrics_all()
+#print get_lyrics_all()
 #print get_lyrics_all()[0]
 
 '''
@@ -108,32 +88,57 @@ lyrics = get_lyrics(song_id)
 #sasha fomina account
 # Returns the json for analysis of a single string of any length
 def analyze_single(text):
-    url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
+    #url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
+    url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + text
     req = requests.get(url, auth=('1040bc05-8ffa-4577-a465-43d95b55737d', '0xvV0yqEOsyy'))
     json = req.json()
     tones = json['document_tone']['tones']
+    tonesList = []
     for tone in tones:
-        print tone
+        #print tone
         tone_name = tone['tone_name']
         if tone_name is not 'None':
-            print tone_name
+            #print tone_name
+            tonesList.append(tone_name)
+    return tonesList
 
-print "\n===== LYRICS ======\n"
-# print get_lyrics_all()[1]['lyrics']
-print "\n===========\n"
+def analyze_all():
+    retList = get_lyrics_all()
+    for song in retList:
+        song['tones'] = analyze_single(song['lyrics'])
+    i = 0
+    while (i < len(retList)):
+        if retList[i]['tones'] == []:#iterates through list and if no tones removes it; does not increment because it moves to next automatically through deletion
+            del retList[i]
+        else:
+            i += 1
 
-analyze_single(get_lyrics_all()[1]['lyrics'])
-# analyze_single('''49
-# Ever feel kinda down and out, you don't know just what to do
-# Livin' all of your days in darkness let the sun shine through
-# Ever feel that somehow, somewhere you've lost your way
-# And if you don't get help quick you won't make it through the day
-# Could you call on Lady Day, could you call on John Coltrane
-# ...
-#
-# ******* This Lyrics is NOT for Commercial use *******
-# (1409616471235)
-# ''')
+    return retList
+
+#print analyze_all()
+
+def get_tone(tone):
+    allList = analyze_all()
+    #print len(allList)
+    retList = []
+    for song in allList:
+        #print song['dL_name']
+        #print song['tones']
+        if tone in song['tones']:
+            #print "***"
+            retList.append(song)
+    #print len(retList)
+    return retList
+
+print len(get_tone('Anger'))
+#print len(get_tone('Disgust'))
+#print len(get_tone('Fear'))
+#print len(get_tone('Joy'))
+#print len(get_tone('Sadness'))
+
+#print len(get_tone('Analytical'))
+#print len(get_tone('Confident'))
+#print len(get_tone('Tentative'))
 
 '''
 @form_site.route('/')
