@@ -2,8 +2,7 @@
 import requests, json
 
 #=====================================================================================
-# - should add way of getting images from get_songs or musixmatch. check googdocs for which one has image of song
-# - should find a way to create and display playlist of songs from mood songs returned by watson
+# - should add way of getting youtube embeded video links from youtube api 
 #=====================================================================================
 
 #henry zheng account
