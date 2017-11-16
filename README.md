@@ -7,10 +7,10 @@ sample description: A bunch of APIs mixed together to create one program.
 <INSERT DESCRIPTION HERE>
 
 ## Dependencies
-* `<INSERT DEPENDENCIES HERE>
+* `<INSERT DEPENDENCIES HERE>`
 * `from flask: Flask, render_template, request, session, redirect, url_for, flash`
 * `python2.7`
-* `<INSERT DEPENDENCIES HERE>
+* `<INSERT DEPENDENCIES HERE>`
 
 ## File Structure
 ```
