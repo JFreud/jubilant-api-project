@@ -4,6 +4,8 @@ import requests, json
 #==============================================================================
 # - should add way of getting youtube embeded video links from youtube api
 #     url = "https://gdata.youtube.com/feeds/api/videos?q=SEARCH_QUERY&key=YOUR_API_KEY&orderby=viewCount&max-results=50&v=2&alt=json"
+
+#     url = "https://gdata.youtube.com/feeds/api/videos?q=SEARCH_QUERY&key=AIzaSyATP2BxeFJ1vx1o9k-48pLcBcAMopDf3PY&orderby=viewCount&max-results=1&v=3&alt=json"
 #==============================================================================
 
 #henry zheng account
