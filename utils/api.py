@@ -1,9 +1,10 @@
 #from flask import Flask, render_template
 import requests, json
 
-#=====================================================================================
-# - should add way of getting youtube embeded video links from youtube api 
-#=====================================================================================
+#==============================================================================
+# - should add way of getting youtube embeded video links from youtube api
+#     url = "https://gdata.youtube.com/feeds/api/videos?q=SEARCH_QUERY&key=YOUR_API_KEY&orderby=viewCount&max-results=50&v=2&alt=json"
+#==============================================================================
 
 #henry zheng account
 
