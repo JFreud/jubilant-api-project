@@ -1,0 +1,6 @@
+henryZ -- 2017-11-15 10:21:13
+added in functionality of last.fm, musixmatch, watson
+
+henryZ -- 2017-11-16 1:41:22
+watson now works completely
+
