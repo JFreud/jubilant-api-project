@@ -4,3 +4,6 @@ added in functionality of last.fm, musixmatch, watson
 henryZ -- 2017-11-16 1:41:22
 watson now works completely
 
+jeromeF -- 2017-11-16 21:00:28
+added youtube api functionality
+
