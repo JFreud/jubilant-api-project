@@ -137,7 +137,7 @@ def get_tone(tone):
     #print len(retList)
     return retList
 
-print len(get_tone('Anger'))
+#print len(get_tone('Anger'))
 #print len(get_tone('Disgust'))
 #print len(get_tone('Fear'))
 #print len(get_tone('Joy'))
@@ -146,6 +146,23 @@ print len(get_tone('Anger'))
 #print len(get_tone('Analytical'))
 #print len(get_tone('Confident'))
 #print len(get_tone('Tentative'))
+
+#jeromes account
+def get_youtube_url(song_dict):
+    artist = song_dict['dL_artist'].replace(" ", "+")#replace spaces in query with +
+    title = song_dict["dL_name"].replace(" ", "+")
+    query = artist + "+" + title
+    key = "AIzaSyATP2BxeFJ1vx1o9k-48pLcBcAMopDf3PY"
+    url = "https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&q=%s" % (key, query)#builds url
+    response = requests.get(url)
+    results_dict = json.loads(response.text)#creates dict of response
+    
+    video_id = results_dict['items'][0]['id']['videoId']#extracts video query id from the dict
+    return "https://www.youtube.com/watch?v=" + video_id
+
+song = get_tone('Tentative')[0]
+print "=====song: %s by %s\n" % (song['dL_name'], song['dL_artist'])
+print get_youtube_url(song)
 
 '''
 @form_site.route('/')
