@@ -7,3 +7,6 @@ watson now works completely
 jeromeF -- 2017-11-16 21:00:28
 added youtube api functionality
 
+jonathanQ -- 2017-11-20 23:55:21
+set up the basic template for all future html files, created placeholder static folder stylesheet,
+input.html,output.html, and home.html. Also edited app.py for basic flask functionality
