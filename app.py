@@ -18,6 +18,19 @@ def input():
 def output():
         return render_template('output.html')
 
+@app.route('/login')
+def login():
+        return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+        return null
+
+@app.route('/register')
+def register():
+        return render_template('register.html')
+        
+
 
 
 
