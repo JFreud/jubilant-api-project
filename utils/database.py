@@ -20,7 +20,7 @@ def insertIntoLoginTable(userStr,passwordStr):
 	db.commit()
 	db.close()
 
-def inserIntoUserSongs(userStr,lastFMStr,toneStr,playlistStr):
+def insertIntoUserSongs(userStr,lastFMStr,toneStr,playlistStr):
 	f="data/songs.db"
 	db=sqlite3.connect(f)
 	c=db.cursor()
@@ -54,3 +54,5 @@ def isMatchUserAndPass(username,password):
 		except:
 			pass
 		return False
+
+
