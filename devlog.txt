@@ -20,3 +20,6 @@ changed register.html to work with flask app, barebones register system works
 jonathanQ -- 2017-11-22 02:04:07
 robustified register system, created general error page
 
+jonathanQ -- 2017-11-22 02:41:41
+added login funcionality, created placeholder page for logging in
+

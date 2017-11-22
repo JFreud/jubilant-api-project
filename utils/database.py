@@ -40,3 +40,17 @@ def isStringInTableCol(searchString,table,column):
                     if searchString==deeperEntry:
                         return True
         return False
+
+def isMatchUserAndPass(username,password):
+		f="data/songs.db"
+		db=sqlite3.connect(f)
+		c=db.cursor()
+		command = 'SELECT password FROM login WHERE username="' + username + '";'
+		dbData=c.execute(command)
+		try:
+			for entry in dbData:
+				if entry[0]==password:
+					return True
+		except:
+			pass
+		return False

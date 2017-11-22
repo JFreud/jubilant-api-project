@@ -60,7 +60,25 @@ def logout():
 def register():
         return render_template('register.html')
         
+@app.route('/userWelcomePage',methods=['GET','POST'])
+def userWelcome():
+	for entry in request.form:
+		print entry
+		print request.form[entry]
+	try:
+		if request.form['submitType'] == "Sign In": #detects a sign in request
+			username = request.form['username']
+			password = hashlib.md5(request.form['password'].encode()).hexdigest()
+			if (database.isMatchUserAndPass(username,password)==True):	#check if user login is correct
+				return render_template('userWelcomePage.html')
+			else:
+				return render_template('accountErrorPage.html',linkString="/login",buttonString="username and/or password is incorrect, click here to try again")
+				
+	except:
+		print "no post data"
 
+		
+	return render_template('accountErrorPage.html',linkString="/login",buttonString="something is very wrong, click here to login again")
 
 
 
