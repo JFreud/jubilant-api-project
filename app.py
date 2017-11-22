@@ -25,10 +25,31 @@ def output():
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
-        if request.form['submitType'] == "Sign up": #detects a register request
-            username = request.form['username']
-            password = hashlib.md5(request.form['password'].encode()).hexdigest()
-            database.insertIntoLoginTable(username,password)
+        try:
+            if request.form['submitType'] == "Sign up": #detects a register request
+				username = request.form['username']
+				password = hashlib.md5(request.form['password'].encode()).hexdigest()
+				confirmPassword = hashlib.md5(request.form['confirmPassword'].encode()).hexdigest()
+				
+				#check if username already exists
+				if (database.isStringInTableCol(username,'login','username')==True):
+					return render_template('accountErrorPage.html',linkString='/register',buttonString='Username already exists, click here to go back')
+				
+				#check if passwords are the same
+				elif(password != confirmPassword):
+					return render_template('accountErrorPage.html',linkString='/register',buttonString='Passwords do not match, click here to try again')
+					
+				#all seems good, add to DB
+				else:
+					database.insertIntoLoginTable(username,password)
+
+              
+
+
+        except:
+            print "no POST data found"
+		
+		
         return render_template('login.html')
 
 @app.route('/logout')
