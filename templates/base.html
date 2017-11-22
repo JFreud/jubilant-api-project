@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html>
-  
-  <head>
-    <title> {{ title }}</title>
-  </head>
+{% extends "uniTemp.html" %}
+{% block content1 %}
+<div class="row featurette">
+  <div class="row no-gutter">
+    <div class="col-md-2">
+      1
+    </div>
+    <div class="col-md-10">
+      2
+    </div>
+  </div>
+	</div>
+  </div>
 
-  {% block body %}
-  <body>
+  <hr class="featurette-divider">
 
-    <center>
-
-      <h1>{{ title }}</h1>
-      <h3>{{ date }}</h3>
-      <h2>{{ copyright }}</h2>
-
-      <img src={{ hdurl }}>{{ title }}</img>
-      {{ explanation }}
-      
-    </center>
-    
-  </body>
-  {% endblock %}
-  
-</html>
+{% endblock %}
