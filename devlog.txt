@@ -10,6 +10,9 @@ added youtube api functionality
 jonathanQ -- 2017-11-20 23:55:21
 set up the basic template for all future html files, created placeholder static folder stylesheet,
 input.html,output.html, and home.html. Also edited app.py for basic flask functionality
+
 danielC -- 2017-11-21 18:31:04
 added HTML+CSS for login, register, home, and output.
 
+jonathanQ -- 2017-11-21 23:11:09
+changed register.html to work with flask app, barebones register system works
