@@ -14,10 +14,7 @@ def root():
 @app.route('/home')
 def home():
         return render_template('home.html')
-    
-@app.route('/input')
-def input():
-        return render_template('input.html')
+
 
 @app.route('/output')
 def output():
@@ -25,6 +22,8 @@ def output():
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
+	if bool(session) != False:
+		return redirect(url_for('userWelcome'))
         try:
             if request.form['submitType'] == "Sign up": #detects a register request
 				username = request.form['username']
@@ -58,10 +57,17 @@ def logout():
 
 @app.route('/register',methods=['GET','Post'])
 def register():
+	if bool(session) != False:
+		return redirect(url_for('userWelcome'))
         return render_template('register.html')
+
+
         
 @app.route('/userWelcomePage',methods=['GET','POST'])
 def userWelcome():
+
+	if bool(session) != False:
+		return render_template('input.html')
 	for entry in request.form:
 		print entry
 		print request.form[entry]
@@ -70,7 +76,8 @@ def userWelcome():
 			username = request.form['username']
 			password = hashlib.md5(request.form['password'].encode()).hexdigest()
 			if (database.isMatchUserAndPass(username,password)==True):	#check if user login is correct
-				return render_template('userWelcomePage.html')
+				session['user']=username
+				return render_template('input.html')
 			else:
 				return render_template('accountErrorPage.html',linkString="/login",buttonString="username and/or password is incorrect, click here to try again")
 				
