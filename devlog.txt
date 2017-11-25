@@ -26,3 +26,6 @@ added login funcionality, created placeholder page for logging in
 danielC -- 2017-11-24 12:28:47
 updated CSS for body and made input html
 
+jeromeF -- 2017-11-25 12:20:21
+updated README
+
