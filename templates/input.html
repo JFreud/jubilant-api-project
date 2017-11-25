@@ -2,19 +2,24 @@
 {% extends "uniTemp.html" %}
 {% block content1 %}
 	<h1>Put your things in.</h1>
-	<form method= "POST" action="/idk">
+	<form method= "POST" action="/output">
 		<div class="form-group">
 		  <label for="lastfm">Enter a last.fm link:</label>
 		  <input type="text" class="form-control" id="lastfm" name="lastfm" placeholder="https://www.last.fm/user/example" required autofocus>
-		</div>  
+		</div>
 		<div class="form-group">
-			<label for="feeling">How do you feel right now?</label>
+			<label for="feeling">What do you feel right now?</label>
 			<select class="form-control" id="feeling" name="feeling">
 			  <option>Joy</option>
 			  <option>Sadness</option>
 			  <option>Anger</option>
 			  <option>Frustration</option>
-			  <option>etc..</option>
+			  <option>Tentative</option>
+				<option>Disgust</option>
+				<option>Fear</option>
+				<option>Analytical</option>
+				<option>Tentative</option>
+				<option>Confident</option>
 			</select>
 		  </div>
 		  <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Submit">Get song recommendations!</button>
