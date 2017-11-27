@@ -19,6 +19,24 @@
     padding-left: 1.5rem;
     padding-right:  1.5rem;
   }
+  .carousel-item {
+    height: 100vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  div.carousel-caption{
+    color: rgb(255, 255, 255);
+    text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;  
+  }
+  
   .btn-primary{
     color: #fff;
     background-color: #5b71a7;

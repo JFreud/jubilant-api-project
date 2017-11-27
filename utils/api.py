@@ -101,19 +101,20 @@ lyrics = get_lyrics(song_id)
 #sasha fomina account
 # Returns the json for analysis of a single string of any length
 def analyze_single(text):
-    #url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
-    url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + text
-    req = requests.get(url, auth=('1040bc05-8ffa-4577-a465-43d95b55737d', '0xvV0yqEOsyy'))
-    json = req.json()
-    tones = json['document_tone']['tones']
-    tonesList = []
-    for tone in tones:
-        #print tone
-        tone_name = tone['tone_name']
-        if tone_name is not 'None':
-            #print tone_name
-            tonesList.append(tone_name)
-    return tonesList
+	#url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
+	url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + text
+	req = requests.get(url, auth=('1040bc05-8ffa-4577-a465-43d95b55737d', '0xvV0yqEOsyy'))
+	json = req.json()
+	print json
+	tones = json['document_tone']['tones']
+	tonesList = []
+	for tone in tones:
+		#print tone
+		tone_name = tone['tone_name']
+	if tone_name is not 'None':
+		#print tone_name
+		tonesList.append(tone_name)
+	return tonesList
 
 def analyze_all(user):
     retList = get_lyrics_all(user)

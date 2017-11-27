@@ -26,7 +26,6 @@ def output():
 			requestedUser =  str(request.form['lastfm']).strip('[]')
 			database.insertIntoUserSongs(session['user'],requestedUser,api.buildDictForDB(requestedUser))
 		return render_template('output.html',songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling']))
-
 @app.route('/login',methods = ['GET','POST'])
 def login():
 	if bool(session) != False:
