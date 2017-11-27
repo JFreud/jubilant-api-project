@@ -37,3 +37,6 @@ to save on loading time, songs with selected mood display now works
 danielC -- 2017-11-27 13:15:59
 made output.html nice
 
+danielC -- 2017-11-27 17:50:16
+made messages flash
+

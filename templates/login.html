@@ -1,7 +1,11 @@
 {% extends "loginbase.html" %}
 {% block content1 %}
 <div class="container">
-    
+    {% set messages = get_flashed_messages() %}
+    {% for each in messages %}
+      <h3>{{each}}</h3>
+      <br>
+    {% endfor %}
           <form method = "POST" action="/userWelcomePage" class="form-signin">
             <h2 class="form-signin-heading">Please sign in. </h2>
             <label for="inputEmail" class="sr-only">username</label>

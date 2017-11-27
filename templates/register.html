@@ -1,8 +1,12 @@
 {% extends "loginbase.html" %}
 {% block content1 %}
 <div class="container">
-    
-          <form method = "POST" action="/login" class="form-signin">
+    {% set messages = get_flashed_messages() %}
+    {% for each in messages %}
+      <h3>{{each}}</h3>
+      <br>
+    {% endfor %}
+          <form method = "POST" action="/makeaccount" class="form-signin">
             <h2 class="form-signin-heading">Please Register. </h2>
             <label for="inputEmail" class="sr-only">Username</label>
             <input type="user" id="inputEmail" name="username" class="form-control" placeholder="Username" required autofocus>
