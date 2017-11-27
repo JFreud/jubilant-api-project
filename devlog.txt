@@ -34,3 +34,6 @@ api.py can now deal with no youtube results, final product of api.py returns
 dictionary with the data + yt url, database.py can now proccess requests 
 from app.py for inputting api data, database can retrieve old requests
 to save on loading time, songs with selected mood display now works
+danielC -- 2017-11-27 13:15:59
+made output.html nice
+
