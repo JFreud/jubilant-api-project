@@ -32,53 +32,59 @@ def get_songs(user):
     return retList
 
 #james smith account
-api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
+#api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
 
 def get_song_id(track, artist):
-    url = api_base.format("track.search", "q_track={0}&q_artist={1}&page_size=5&page=1&s_track_rating=desc".format(track.replace(" ", "%20"), artist.replace(" ", "%20")))
-    msg = requests.get(url)
-    search_dict = json.loads(msg.text)
-    if search_dict["message"]["body"]["track_list"] == []:
-        return None
-    return search_dict["message"]["body"]["track_list"][0]["track"]["track_id"]
+	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
+	try: #accounts for the occasional foreign character
+		url = api_base.format("track.search", "q_track={0}&q_artist={1}&page_size=5&page=1&s_track_rating=desc".format(track.replace(" ", "%20"), artist.replace(" ", "%20")))
+	except:
+		return None
+	msg = requests.get(url)
+	search_dict = json.loads(msg.text)
+	if search_dict["message"]["body"]["track_list"] == []:
+		return None
+	return search_dict["message"]["body"]["track_list"][0]["track"]["track_id"]
 
 def get_lyrics(track_id):
-    url = api_base.format("track.lyrics.get","track_id={}".format(track_id))
-    msg = requests.get(url)
-    lyrics_dict = json.loads(msg.text)
-    if lyrics_dict["message"]["body"] == []:
-        return None
-    body = lyrics_dict["message"]["body"]["lyrics"]["lyrics_body"]
+	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
+	url = api_base.format("track.lyrics.get","track_id={}".format(track_id))
+	msg = requests.get(url)
+	lyrics_dict = json.loads(msg.text)
+	if lyrics_dict["message"]["body"] == []:
+		return None
+	body = lyrics_dict["message"]["body"]["lyrics"]["lyrics_body"]
     #body.split("*")
     #print body
 
     
-    if body == "":
-        return None
-    else:
-        return body
+	if body == "":
+		return None
+	else:
+		return body
 
 
-user_info = "rj"
+#user_info = "rj"
 #print get_songs(user_info)
 
 
-def get_lyrics_all():
-    retList = get_songs(user_info)
-    for song in retList:
-        lyrics = get_lyrics(get_song_id(song['dL_name'], song['dL_artist']))
-        song['lyrics'] = lyrics
-
-    i = 0
-    while (i < len(retList)):
-        if retList[i]['lyrics'] is None:#iterates through list and if no lyrics removes it; does not increment because it moves to next automatically through deletion
-            del retList[i]
-        else:
-            retList[i]['lyrics'] = retList[i]['lyrics'].split("*")[0]
-            #print retList[i]['lyrics']
-            i += 1
-            
-    return retList
+def get_lyrics_all(user):
+	user_info = user
+	retList = get_songs(user_info)
+	for song in retList:
+		lyrics = get_lyrics(get_song_id(song['dL_name'], song['dL_artist']))
+		song['lyrics'] = lyrics
+		
+	i = 0
+	while (i < len(retList)):
+		if retList[i]['lyrics'] is None:#iterates through list and if no lyrics removes it; does not increment because it moves to next automatically through deletion
+			del retList[i]
+		else:
+			retList[i]['lyrics'] = retList[i]['lyrics'].split("*")[0]
+			#print retList[i]['lyrics']
+			i += 1    
+			
+	return retList
 
 #print get_lyrics_all()
 #print get_lyrics_all()[0]
@@ -109,8 +115,8 @@ def analyze_single(text):
             tonesList.append(tone_name)
     return tonesList
 
-def analyze_all():
-    retList = get_lyrics_all()
+def analyze_all(user):
+    retList = get_lyrics_all(user)
     for song in retList:
         song['tones'] = analyze_single(song['lyrics'])
     i = 0
@@ -126,7 +132,7 @@ def analyze_all():
 
 def get_tone(tone):
     allList = analyze_all()
-    #print len(allList)
+    #print allList
     retList = []
     for song in allList:
         #print song['dL_name']
@@ -149,20 +155,30 @@ def get_tone(tone):
 
 #jeromes account
 def get_youtube_url(song_dict):
-    artist = song_dict['dL_artist'].replace(" ", "+")#replace spaces in query with +
-    title = song_dict["dL_name"].replace(" ", "+")
-    query = artist + "+" + title
-    key = "AIzaSyATP2BxeFJ1vx1o9k-48pLcBcAMopDf3PY"
-    url = "https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&q=%s" % (key, query)#builds url
-    response = requests.get(url)
-    results_dict = json.loads(response.text)#creates dict of response
-    
-    video_id = results_dict['items'][0]['id']['videoId']#extracts video query id from the dict
-    return "https://www.youtube.com/watch?v=" + video_id
+	artist = song_dict['dL_artist'].replace(" ", "+")#replace spaces in query with +
+	title = song_dict["dL_name"].replace(" ", "+")
+	query = artist + "+" + title
+	key = "AIzaSyATP2BxeFJ1vx1o9k-48pLcBcAMopDf3PY"
+	url = "https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&q=%s" % (key, query)#builds url
+	response = requests.get(url)
+	results_dict = json.loads(response.text)#creates dict of response
+	try:
+		video_id = results_dict['items'][0]['id']['videoId']#extracts video query id from the dict
+		return "https://www.youtube.com/watch?v=" + video_id
+	except:
+		pass
+		return "https://www.youtube.com/watch?v=aDm5WZ3QiIE"
 
-song = get_tone('Tentative')[0]
-print "=====song: %s by %s\n" % (song['dL_name'], song['dL_artist'])
-print get_youtube_url(song)
+	
+def buildDictForDB(user):
+	allList=analyze_all(user)
+	for songData in allList:
+		songData['url']=get_youtube_url(songData)
+		print songData
+	return allList
+	
+if __name__ == "__main__":
+	print buildDictForDB("joi")
 
 '''
 @form_site.route('/')

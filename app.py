@@ -20,7 +20,12 @@ def home():
 
 @app.route('/output',methods = ['GET','POST'])
 def output():
-        return render_template('output.html')
+		requestedUser =  str(request.form['lastfm']).strip('[]')
+		#input new data if the user+lastfm combo doesn't already exist
+		if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
+			requestedUser =  str(request.form['lastfm']).strip('[]')
+			database.insertIntoUserSongs(session['user'],requestedUser,api.buildDictForDB(requestedUser))
+		return render_template('output.html',songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling']))
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
