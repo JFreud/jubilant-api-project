@@ -76,6 +76,11 @@ def isMatchUserAndPass(username,password):
 		db.close()
 		return False
 
+def convertToEmbeded(url):
+		splitThing = url.split('/watch?v=')
+		print splitThing
+		return splitThing[0] + "/embed/" + splitThing[1]
+
 def songsWithMatchingTone(username,lastFM,theTone):
 		f="data/songs.db"
 		db=sqlite3.connect(f)
@@ -89,7 +94,7 @@ def songsWithMatchingTone(username,lastFM,theTone):
 			if theTone in entry[0]:
 				childRetDict['artist']=entry[1]
 				childRetDict['song']=entry[2]
-				childRetDict['url']=entry[3]
+				childRetDict['url']=convertToEmbeded(entry[3])
 				parentRetList.append(childRetDict)
 				childRetDict={}
 		return parentRetList
