@@ -15,7 +15,10 @@ def get_songs(user):
     lastfm = requests.get(url)
 
     dL = json.loads(lastfm.text)
-    dL_lovedtracks = dL['lovedtracks']
+    try:
+    	dL_lovedtracks = dL['lovedtracks']
+    except:
+    	return []
     dL_track = dL_lovedtracks['track']
     retList = []
 
