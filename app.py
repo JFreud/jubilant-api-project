@@ -7,6 +7,16 @@ app.secret_key="PlaceHolderKey"
 database.createTable()
 
 
+key_obj = open("keys.txt")
+keys = key_obj.readline().replace("\n", "").split(",")
+key_obj.close()
+#print keys
+LASTFM_KEY = keys[0]
+MUSIXMATCH_KEY = keys[1]
+WATSON_KEY = keys[2]
+YOUTUBE_KEY = keys[3]
+
+
 @app.route('/')
 def root():
     return redirect(url_for('home'))
@@ -22,7 +32,7 @@ def home():
 def output():
     requestedUser =  str(request.form['lastfm']).strip('[]')
     #input new data if the user+lastfm combo doesn't already exist
-    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=9ec1ef2aeee03ef02b3158df6967d577&format=json"
+    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=%s&format=json" % (MUSIXMATCH_KEY)
     lastfm = requests.get(url)
     dL = json.loads(lastfm.text)
     try:

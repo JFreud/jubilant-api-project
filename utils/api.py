@@ -10,8 +10,18 @@ import requests, json
 
 #henry zheng account
 
+key_obj = open("keys.txt")
+keys = key_obj.readline().replace("\n", "").split(",")
+key_obj.close()
+#print keys
+LASTFM_KEY = keys[0]
+MUSIXMATCH_KEY = keys[1]
+WATSON_KEY = keys[2]
+YOUTUBE_KEY = keys[3]
+
+
 def get_songs(user):
-    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + user + "&api_key=9ec1ef2aeee03ef02b3158df6967d577&format=json"
+    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + user + "&api_key=%s&format=json" % (LASTFM_KEY)
     lastfm = requests.get(url)
 
     dL = json.loads(lastfm.text)
@@ -34,11 +44,11 @@ def get_songs(user):
 
     return retList
 
-#james smith account
+
 #api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
 
 def get_song_id(track, artist):
-	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
+	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=" + MUSIXMATCH_KEY#formatting strings for the command and parameters
 	try: #accounts for the occasional foreign character
 		url = api_base.format("track.search", "q_track={0}&q_artist={1}&page_size=5&page=1&s_track_rating=desc".format(track.replace(" ", "%20"), artist.replace(" ", "%20")))
 	except:
@@ -50,7 +60,7 @@ def get_song_id(track, artist):
 	return search_dict["message"]["body"]["track_list"][0]["track"]["track_id"]
 
 def get_lyrics(track_id):
-	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=7169e60f579305a0c080332a16b41537"#formatting strings for the command and parameters
+	api_base = "http://api.musixmatch.com/ws/1.1/{0}?{1}&apikey=" + MUSIXMATCH_KEY#formatting strings for the command and parameters
 	url = api_base.format("track.lyrics.get","track_id={}".format(track_id))
 	msg = requests.get(url)
 	lyrics_dict = json.loads(msg.text)
@@ -107,7 +117,7 @@ def analyze_single(text):
 	#url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
 	url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + text
 	#req = requests.get(url, auth=('1040bc05-8ffa-4577-a465-43d95b55737d', '0xvV0yqEOsyy'))
-	req = requests.get(url, auth=('072634ef-e61f-4f24-bdba-f49203897eef','FkIfSxB6F8XR'))
+	req = requests.get(url, auth=('072634ef-e61f-4f24-bdba-f49203897eef',WATSON_KEY))
 	json = req.json()
 	print json
 	tones = json['document_tone']['tones']
@@ -163,8 +173,7 @@ def get_youtube_url(song_dict):
 	artist = song_dict['dL_artist'].replace(" ", "+")#replace spaces in query with +
 	title = song_dict["dL_name"].replace(" ", "+")
 	query = artist + "+" + title
-	key = "AIzaSyATP2BxeFJ1vx1o9k-48pLcBcAMopDf3PY"
-	url = "https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&q=%s" % (key, query)#builds url
+	url = "https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&q=%s" % (YOUTUBE_KEY, query)#builds url
 	response = requests.get(url)
 	results_dict = json.loads(response.text)#creates dict of response
 	try:
