@@ -75,7 +75,13 @@ def makeaccount():
 
 @app.route('/logout')
 def logout():
-        return null
+    print "USERNAME"
+    print session['user']
+    print session
+    username = session.pop('user')
+    msg = "Successfully logged out " + username
+    flash(msg)
+    return redirect(url_for('login'))
 
 @app.route('/login',methods=['GET','Post'])
 def login():
@@ -120,6 +126,7 @@ def userWelcome():
 
 
 	return render_template('accountErrorPage.html',linkString="/login",buttonString="something is very wrong, click here to login again")
+
 
 
 

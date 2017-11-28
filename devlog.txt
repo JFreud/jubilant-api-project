@@ -43,3 +43,6 @@ made messages flash
 jeromeF -- 2017-11-27 20:41:51
 added redirects and error messages for lastfm user not found, user having no loved songs, and user having no loved songs of the chosen tone
 
+jeromeF -- 2017-11-27 20:55:01
+added logout functionality
+
