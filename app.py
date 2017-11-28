@@ -31,21 +31,21 @@ def output():
             return redirect(url_for("userWelcome"))
     except KeyError:#message is only in dL if user not found
         pass
-    print "ENTERED OUTPUT\n"
+    #print "ENTERED OUTPUT\n"
     if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
         requestedUser =  str(request.form['lastfm']).strip('[]')
         #print "API DICT BUILT:"
         song_dict = api.buildDictForDB(requestedUser)
-        print "\n======SONG DICT: ==========\n"
-        print song_dict
+        #print "\n======SONG DICT: ==========\n"
+        #print song_dict
         if (not song_dict):
             print "SHOULD REDIRECT:\n"
             flash("User has no loved songs")
             return redirect(url_for("userWelcome"))
         database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
     songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling'])
-    print "HERE THE SONGLIST"
-    print songList
+    #print "HERE THE SONGLIST"
+    #print songList
     if not songList:
         flash("User does not love this tone")
         return redirect(url_for("userWelcome"))
