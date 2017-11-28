@@ -42,21 +42,21 @@ def insertIntoUserSongs(userStr,lastFMStr,apiDict):
 	db.commit()
 	db.close()
 
-# def isStringInTableCol(searchString,table,column):
-# 		f="data/songs.db"
-# 		db=sqlite3.connect(f)
-# 		c=db.cursor()
-# 		command= "SELECT " + column + " FROM " +  table + ";"
-# 		colData=c.execute(command)
-# 		for entry in colData:
-# 			for deeperEntry in entry:
-# 				if searchString==deeperEntry:
-# 					db.commit()
-# 					db.close()
-# 					return True
-# 		db.commit()
-# 		db.close()
-# 		return False
+def isStringInTableCol(searchString,table,column):
+		f="data/songs.db"
+		db=sqlite3.connect(f)
+		c=db.cursor()
+		command= "SELECT " + column + " FROM " +  table + ";"
+		colData=c.execute(command)
+		for entry in colData:
+			for deeperEntry in entry:
+				if searchString==deeperEntry:
+					db.commit()
+					db.close()
+					return True
+		db.commit()
+		db.close()
+		return False
 
 def isStringInTable(userStr, lastFMStr, columnA, columnB, table):
 	f = "data/songs.db"
