@@ -31,10 +31,16 @@ def output():
         print song_dict
         if (not song_dict):
             print "SHOULD REDIRECT:\n"
-            flash("No songs found :(")
+            flash("User doesn't exist or has no loved songs")
             return redirect(url_for("userWelcome"))
         database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
-    return render_template('output.html',songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling']))
+    songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling'])
+    print "HERE THE SONGLIST"
+    print songList
+    if not songList:
+        flash("User does not love this tone")
+        return redirect(url_for("userWelcome"))
+    return render_template('output.html',songList=songList)
 
 @app.route('/makeaccount',methods = ['GET','POST'])
 def makeaccount():

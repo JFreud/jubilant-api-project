@@ -35,16 +35,15 @@
 					</li>
 				</ul>
 			</div>
-			<div class = "flash-messages">
-				{% set messages = get_flashed_messages() %}
-				{% for message in messages %}
-				{{ message }}
-				{% endfor %}
-			</div>
 		</nav>
 		{% block content1 %}
 		{% endblock %}
-
+		<div class = "flash-messages">
+			{% set messages = get_flashed_messages() %}
+			{% for message in messages %}
+			{{ message }}
+			{% endfor %}
+		</div>
 
 
 
