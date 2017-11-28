@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from utils import database, api
-import os, sqlite3, hashlib, requests
+import os, sqlite3, hashlib, requests, json
 
 app = Flask(__name__)
 app.secret_key="PlaceHolderKey"
@@ -22,6 +22,15 @@ def home():
 def output():
     requestedUser =  str(request.form['lastfm']).strip('[]')
     #input new data if the user+lastfm combo doesn't already exist
+    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=9ec1ef2aeee03ef02b3158df6967d577&format=json"
+    lastfm = requests.get(url)
+    dL = json.loads(lastfm.text)
+    try:
+        if dL["message"] == "User not found":
+            flash("last fm user does not exist")
+            return redirect(url_for("userWelcome"))
+    except KeyError:#message is only in dL if user not found
+        pass
     print "ENTERED OUTPUT\n"
     if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
         requestedUser =  str(request.form['lastfm']).strip('[]')
@@ -31,7 +40,7 @@ def output():
         print song_dict
         if (not song_dict):
             print "SHOULD REDIRECT:\n"
-            flash("User doesn't exist or has no loved songs")
+            flash("User has no loved songs")
             return redirect(url_for("userWelcome"))
         database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
     songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling'])
