@@ -46,3 +46,6 @@ added redirects and error messages for lastfm user not found, user having no lov
 jeromeF -- 2017-11-27 20:55:01
 added logout functionality
 
+henryZ jeromeF -- 2017-11-28 13:50:39
+added force update
+

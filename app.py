@@ -35,7 +35,8 @@ def output():
     print "\nChecking this user: %s\n" % (requestedUser)
     print database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs")
     print "====="
-    if not database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs"):
+    print request.form
+    if not database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs") or 'update' in request.form:
         requestedUser =  str(request.form['lastfm']).strip('[]')
         #print "API DICT BUILT:"
         song_dict = api.buildDictForDB(requestedUser)
