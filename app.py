@@ -32,20 +32,24 @@ def output():
     except KeyError:#message is only in dL if user not found
         pass
     #print "ENTERED OUTPUT\n"
-    if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
+    print "\nChecking this user: %s\n" % (requestedUser)
+    print database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs")
+    print "====="
+    if not database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs"):
         requestedUser =  str(request.form['lastfm']).strip('[]')
         #print "API DICT BUILT:"
         song_dict = api.buildDictForDB(requestedUser)
         #print "\n======SONG DICT: ==========\n"
         #print song_dict
+        print "NEW"
         if (not song_dict):
             print "SHOULD REDIRECT:\n"
             flash("User has no loved songs")
             return redirect(url_for("userWelcome"))
         database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
     songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling'])
-    #print "HERE THE SONGLIST"
-    #print songList
+    print "HERE THE SONGLIST"
+    print songList
     if not songList:
         flash("User does not love this tone")
         return redirect(url_for("userWelcome"))
