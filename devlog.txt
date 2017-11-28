@@ -49,3 +49,6 @@ added logout functionality
 henryZ jeromeF -- 2017-11-28 13:50:39
 added force update
 
+danielC -- 2017-11-28 14:26:13
+Made checkbox look nice + nice flashy messages
+

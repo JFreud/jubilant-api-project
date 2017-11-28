@@ -42,11 +42,15 @@
     background-color: #5b71a7;
     border-color: #4d6396;
   }
-
-  .btn-primary:hover {
+  .btn-primary{
     color: #fff;
-    background-color: #375a7f;
-    border-color: #375a7f;
+    background-color: #5b71a7;
+    border-color: #4d6396;
+  }
+  span.input-group-addon{
+    color: #fff;
+    background-color: #43588b;
+    border-color: #364e83;
   }
   /* navbar */
   .navbar {
