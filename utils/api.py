@@ -60,7 +60,7 @@ def get_lyrics(track_id):
     #body.split("*")
     #print body
 
-    
+
 	if body == "":
 		return None
 	else:
@@ -77,7 +77,7 @@ def get_lyrics_all(user):
 	for song in retList:
 		lyrics = get_lyrics(get_song_id(song['dL_name'], song['dL_artist']))
 		song['lyrics'] = lyrics
-		
+
 	i = 0
 	while (i < len(retList)):
 		if retList[i]['lyrics'] is None:#iterates through list and if no lyrics removes it; does not increment because it moves to next automatically through deletion
@@ -85,8 +85,8 @@ def get_lyrics_all(user):
 		else:
 			retList[i]['lyrics'] = retList[i]['lyrics'].split("*")[0]
 			#print retList[i]['lyrics']
-			i += 1    
-			
+			i += 1
+
 	return retList
 
 #print get_lyrics_all()
@@ -174,14 +174,14 @@ def get_youtube_url(song_dict):
 		pass
 		return "https://www.youtube.com/watch?v=aDm5WZ3QiIE"
 
-	
+
 def buildDictForDB(user):
 	allList=analyze_all(user)
 	for songData in allList:
 		songData['url']=get_youtube_url(songData)
 		print songData
 	return allList
-	
+
 if __name__ == "__main__":
 	print buildDictForDB("joi")
 

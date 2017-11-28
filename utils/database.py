@@ -20,15 +20,15 @@ def insertIntoLoginTable(userStr,passwordStr):
 	db.commit()
 	db.close()
 
-def removeSpecialChar(theString): 
-	charThatBreakDB = "'" + '"' + '!?#,.' 
-	outStr ="" 
-	charList=list(theString) 
-	for character in charList: 
-		if not(character in charThatBreakDB): 
-			outStr += character 
+def removeSpecialChar(theString):
+	charThatBreakDB = "'" + '"' + '!?#,.'
+	outStr =""
+	charList=list(theString)
+	for character in charList:
+		if not(character in charThatBreakDB):
+			outStr += character
 	return outStr
-	
+
 def insertIntoUserSongs(userStr,lastFMStr,apiDict):
 	f="data/songs.db"
 	db=sqlite3.connect(f)
@@ -55,7 +55,7 @@ def isStringInTableCol(searchString,table,column):
 					db.close()
 					return True
 		db.commit()
-		db.close()					
+		db.close()
 		return False
 
 def isMatchUserAndPass(username,password):
@@ -98,4 +98,3 @@ def songsWithMatchingTone(username,lastFM,theTone):
 				parentRetList.append(childRetDict)
 				childRetDict={}
 		return parentRetList
-		

@@ -20,12 +20,21 @@ def home():
 
 @app.route('/output',methods = ['GET','POST'])
 def output():
-		requestedUser =  str(request.form['lastfm']).strip('[]')
-		#input new data if the user+lastfm combo doesn't already exist
-		if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
-			requestedUser =  str(request.form['lastfm']).strip('[]')
-			database.insertIntoUserSongs(session['user'],requestedUser,api.buildDictForDB(requestedUser))
-		return render_template('output.html',songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling']))
+    requestedUser =  str(request.form['lastfm']).strip('[]')
+    #input new data if the user+lastfm combo doesn't already exist
+    print "ENTERED OUTPUT\n"
+    if (database.isStringInTableCol(session['user'],"userSongs","username")==False or database.isStringInTableCol(requestedUser,"userSongs","lastFMuser")==False):
+        requestedUser =  str(request.form['lastfm']).strip('[]')
+        #print "API DICT BUILT:"
+        song_dict = api.buildDictForDB(requestedUser)
+        print "\n======SONG DICT: ==========\n"
+        print song_dict
+        if (not song_dict):
+            print "SHOULD REDIRECT:\n"
+            flash("No songs found :(")
+            return redirect(url_for("userWelcome"))
+        database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
+    return render_template('output.html',songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling']))
 
 @app.route('/makeaccount',methods = ['GET','POST'])
 def makeaccount():
