@@ -7,9 +7,9 @@
             {% if messages[0] == "User does not exist." %}
             <label for="inputEmail" class="sr-only">username</label>
             <input type="user" id="inputEmail" class="form-control" name="username" placeholder="Username" required autofocus>
-            <p id="passwordHelp" class="text-danger">
+            <h3 id="passwordHelp" class="text-danger">
               User does not exist, please register to make an account if you don't have one yet.
-            </p>      
+            </h3>      
           {% else %}
           <label for="inputEmail" class="sr-only">username</label>
           <input type="user" id="inputEmail" class="form-control" name="username" placeholder="Username" required autofocus>
@@ -17,9 +17,9 @@
           {% if messages[0] == "Wrong Password." %}
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
-            <p id="passwordHelp" class="text-danger">
+            <h3 id="passwordHelp" class="text-danger">
               Wrong password.
-            </p> 
+            </h3> 
             {% else %}
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
