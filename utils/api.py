@@ -13,7 +13,7 @@ import requests, json
 key_obj = open("keys.txt")
 keys = key_obj.readline().replace("\n", "").split(",")
 key_obj.close()
-#print keys
+print keys
 LASTFM_KEY = keys[0]
 MUSIXMATCH_KEY = keys[1]
 WATSON_KEY = keys[2]
@@ -117,7 +117,7 @@ def analyze_single(text):
 	#url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + urllib2.quote(text.encode('utf-8'))
 	url = 'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2017-09-21&sentences=false&text=' + text
 	#req = requests.get(url, auth=('1040bc05-8ffa-4577-a465-43d95b55737d', '0xvV0yqEOsyy'))
-	req = requests.get(url, auth=('072634ef-e61f-4f24-bdba-f49203897eef',WATSON_KEY))
+	req = requests.get(url, auth=('9ce3e140-1d9f-44f7-8f6f-0ea156d8eacc',WATSON_KEY))
 	json = req.json()
 	print json
 	tones = json['document_tone']['tones']

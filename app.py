@@ -32,15 +32,14 @@ def home():
 def output():
     requestedUser =  str(request.form['lastfm']).strip('[]')
     #input new data if the user+lastfm combo doesn't already exist
-    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=%s&format=json" % (MUSIXMATCH_KEY)
+    url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=%s&format=json" % (LASTFM_KEY)
     lastfm = requests.get(url)
     dL = json.loads(lastfm.text)
-    try:
-        if dL["message"] == "User not found":
-            flash("last fm user does not exist")
-            return redirect(url_for("userWelcome"))
-    except KeyError:#message is only in dL if user not found
-        pass
+    print "THE DL\n"
+    print dL
+    if "message" in dL:
+        flash("last fm user does not exist")
+        return redirect(url_for("userWelcome"))
     #print "ENTERED OUTPUT\n"
     print "\nChecking this user: %s\n" % (requestedUser)
     print database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs")
