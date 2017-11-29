@@ -7,9 +7,9 @@
             {% if messages[0] == "Username already exists." %}
             <label for="inputEmail" class="sr-only is-invalid">Username</label>
             <input type="user" id="inputEmail" name="username" class="form-control is-invalid" placeholder="Username" required autofocus>
-              <p id="passwordHelp" class="text-danger">
+              <h3 id="passwordHelp" class="text-danger">
                 Username already exists.
-              </p>      
+              </h3>      
             {% else %}
             <label for="inputEmail" class="sr-only">Username</label>
             <input type="user" id="inputEmail" name="username" class="form-control is-valid" placeholder="Username" required autofocus> 
@@ -20,9 +20,9 @@
             {% if messages[0] == "Passwords do not match" %}
             <label for="inputPassword" class="sr-only">Confirm Password</label>
             <input type="password" id="inputPasswordconfirm" name = "confirmPassword" class="form-control is-invalid" placeholder="re-type password" required>
-              <p id="passwordHelp" class="text-danger">
+              <h3 id="passwordHelp" class="text-danger">
                 Passwords must match.
-              </p>      
+              </h3>      
             {% else %}
             <label for="inputPassword" class="sr-only">Confirm Password</label>
             <input type="password" id="inputPasswordconfirm" name = "confirmPassword" class="form-control" placeholder="re-type password" required>
