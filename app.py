@@ -107,8 +107,12 @@ def login():
 
 @app.route('/register',methods=['GET','Post'])
 def register():
-	print bool(session)
-	return render_template('register.html')
+    if 'user' in session:
+        print "USER\n"
+        print session
+        flash("You are already logged in")
+        return redirect(url_for("userWelcome"))
+    return render_template('register.html')
 
 
 
