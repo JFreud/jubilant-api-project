@@ -102,7 +102,6 @@ app.py
 changes.txt
 design.pdf
 devlog.txt
-keys.txt
 log.sh
 README.md
 ```

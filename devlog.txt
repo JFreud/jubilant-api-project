@@ -31,7 +31,7 @@ updated README
 
 jonathanQ -- 2017-11-26 20:17:43
 api.py can now deal with no youtube results, final product of api.py returns
-dictionary with the data + yt url, database.py can now proccess requests 
+dictionary with the data + yt url, database.py can now proccess requests
 from app.py for inputting api data, database can retrieve old requests
 to save on loading time, songs with selected mood display now works
 
@@ -55,4 +55,3 @@ Made checkbox look nice + nice flashy messages
 
 everyBody -- 2017-11-28 23:25:13
 final changes and testing
-
