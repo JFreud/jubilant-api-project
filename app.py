@@ -10,7 +10,7 @@ database.createTable()
 key_obj = open("keys.txt")
 keys = key_obj.readline().replace("\n", "").split(",")
 key_obj.close()
-#print keys
+##print keys
 LASTFM_KEY = keys[0]
 MUSIXMATCH_KEY = keys[1]
 WATSON_KEY = keys[2]
@@ -35,31 +35,31 @@ def output():
     url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + requestedUser + "&api_key=%s&format=json" % (LASTFM_KEY)
     lastfm = requests.get(url)
     dL = json.loads(lastfm.text)
-    print "THE DL\n"
-    print dL
+    #print "THE DL\n"
+    #print dL
     if "message" in dL:
         flash("last fm user does not exist")
         return redirect(url_for("userWelcome"))
-    #print "ENTERED OUTPUT\n"
-    print "\nChecking this user: %s\n" % (requestedUser)
-    print database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs")
-    print "====="
-    print request.form
+    ##print "ENTERED OUTPUT\n"
+    #print "\nChecking this user: %s\n" % (requestedUser)
+    #print database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs")
+    #print "====="
+    #print request.form
     if not database.isStringInTable(session['user'], requestedUser, "username", "lastFMuser", "userSongs") or 'update' in request.form:
         requestedUser =  str(request.form['lastfm']).strip('[]')
-        #print "API DICT BUILT:"
+        ##print "API DICT BUILT:"
         song_dict = api.buildDictForDB(requestedUser)
-        #print "\n======SONG DICT: ==========\n"
-        #print song_dict
-        print "NEW"
+        ##print "\n======SONG DICT: ==========\n"
+        ##print song_dict
+        #print "NEW"
         if (not song_dict):
-            print "SHOULD REDIRECT:\n"
+            #print "SHOULD REDIRECT:\n"
             flash("User has no loved songs")
             return redirect(url_for("userWelcome"))
         database.insertIntoUserSongs(session['user'],requestedUser,song_dict)
     songList=database.songsWithMatchingTone(session['user'],requestedUser,request.form['feeling'])
-    print "HERE THE SONGLIST"
-    print songList
+    #print "HERE THE SONGLIST"
+    #print songList
     if not songList:
         flash("User does not love this tone")
         return redirect(url_for("userWelcome"))
@@ -89,9 +89,9 @@ def makeaccount():
 
 @app.route('/logout')
 def logout():
-    print "USERNAME"
-    print session['user']
-    print session
+    #print "USERNAME"
+    #print session['user']
+    #print session
     username = session.pop('user')
     msg = "Successfully logged out " + username
     flash(msg)
@@ -99,7 +99,7 @@ def logout():
 
 @app.route('/login',methods=['GET','Post'])
 def login():
-	print session.has_key("user")
+	#print session.has_key("user")
 	if session.has_key("user") == False:
 		return render_template('login.html')
 	return redirect(url_for('userWelcome'))
@@ -107,8 +107,8 @@ def login():
 @app.route('/register',methods=['GET','Post'])
 def register():
     if 'user' in session:
-        print "USER\n"
-        print session
+        #print "USER\n"
+        #print session
         flash("You are already logged in")
         return redirect(url_for("userWelcome"))
     return render_template('register.html')
@@ -120,16 +120,16 @@ def userWelcome():
 
 	if bool(session) != False:
 		return render_template('input.html')
-	for entry in request.form:
-		print entry
-		print request.form[entry]
+	#for entry in request.form:
+		#print entry
+		#print request.form[entry]
 	try:
 		if request.form['submitType'] == "Sign In": #detects a sign in request
 			username = request.form['username']
 			password = hashlib.md5(request.form['password'].encode()).hexdigest()
-			print session
+			#print session
 			if (database.isMatchUserAndPass(username,password)==True):	#check if user login is correct
-				print "wot"
+				#print "wot"
 				session['user']=username
 				return render_template('input.html')
 			elif (database.isStringInTableCol(username,'login','username') == False):

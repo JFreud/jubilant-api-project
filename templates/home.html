@@ -3,10 +3,14 @@
 {% block content1 %}
 
 <div class="inner cover">
-	<h1 class="cover-heading"> Welcome. </h1>
+	<h1 class="cover-heading"> Welcome </h1>
+	<h3 class="cover-heading"> Inside Out the Musical </h3>
 	<p class="lead">
 		Our website will take a user input on how they’re feeling/what mood of music they want to listen to as well as a last.fm username. The website will then access the “loved” songs on last.fm and use Musixmatch to look up the lyrics. Then, the lyrics will be input into the Watson tone analyzer and the tone of the song will be determined. We then return a playlist of their “loved” songs that match the tone of music they selected and embed a youtube video of the song in the output. The database will keep track of which last.fm usernames the user has called and save the playlist in order to reduce the number of API calls and time spent waiting for them. If the user has recently "loved" new songs on last.fm, then he or she can use the "Force Update" checkbox to make the app request data from the APIs even if the last.fm user is already stored in the database.
+	</p><br>
+	<p class = "lead">
+		By zeBois: Daniel Chernovolenko, Jerome Freudenberg, Jonathan Quang, Henry Zheng
 	</p>
 </div>
-       
+
 {% endblock %}

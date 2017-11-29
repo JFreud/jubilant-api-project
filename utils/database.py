@@ -92,7 +92,7 @@ def isMatchUserAndPass(username,password):
 
 def convertToEmbeded(url):
 		splitThing = url.split('/watch?v=')
-		print splitThing
+		#print splitThing
 		return splitThing[0] + "/embed/" + splitThing[1]
 
 def songsWithMatchingTone(username,lastFM,theTone):

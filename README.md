@@ -71,8 +71,8 @@ python app.py
 * When you try to press pause in the bottom left of the embedded youtube video, the carousel moves to the left instead. Pausing is still possible by pressing on the video.
 * The embedded YouTube video is the first search result, meaning it may not be representative of the song desired.
 * The embedded YouTube video continues playing when the user moves on to the next one (it's not a bug, it's a feature!).
-* The app doesn't look at Watson's score for a tone, it adds it to the playlist even if it isn't a near match (in the interest of keeping the playlist populated).
 * Since Watson only looks at the lyrics, the song itself may have a different tone from the one requested.
+  * Especially since musixmatch only gives 30% of lyrics for free, so the analysis may not be as accurate as possible
 * Only the last 50 loved last.fm songs are available, some get thrown out because the free version of Musixmatch doesn't have the lyrics, and only the music that matches the tone requested are in a playlist. As a result, playlists can often be sparse and sometimes repeated in multiple tones.
 * lastfm API has a quota of 5 calls per second averaged over a 5 minute period
 
@@ -88,7 +88,6 @@ static/
     |  background.jpg
 templates/
   |  accountErrorPage.html
-  |  base.html
   |  home.html
   |  input.html
   |  login.html
@@ -103,6 +102,7 @@ app.py
 changes.txt
 design.pdf
 devlog.txt
+keys.txt
 log.sh
 README.md
 ```
