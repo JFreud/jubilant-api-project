@@ -3,7 +3,7 @@ from utils import database, api
 import os, sqlite3, hashlib, requests, json
 
 app = Flask(__name__)
-app.secret_key="PlaceHolderKey"
+app.secret_key = os.urandom(64)
 database.createTable()
 
 

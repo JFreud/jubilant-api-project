@@ -1,1 +1,8 @@
 Changes from initial design doc:
+
+-added navbar
+-table userSongs now saves: site username, lastfm username, the tone, the artist, the title, and the YouTube url
+-added checkbox to force the api calls, even if the lastfm user has been called before
+-added the register page that was forgotten in original design
+-added the logout route that was forgotten in original design
+-used a horizontal bootstrap carousel to show the youtube videos instead of listing the results with the videos embedded next to them

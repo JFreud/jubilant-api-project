@@ -4,11 +4,13 @@
 
 ### Description
 
-Our website will take a user input on how they’re feeling/what mood of music they want to listen to as well as their last.fm username. The website will then access their “loved” songs on last.fm and use musixmatch to look up the lyrics. Then, the lyrics will be input into the watson tone analyzer and the tone of the song will be determined. We then return a playlist of their “loved” songs that match the tone of music they selected, and embed a youtube video of the song in the output.
+Our website will take a user input on how they’re feeling/what mood of music they want to listen to as well as a last.fm username. The website will then access the “loved” songs on last.fm and use Musixmatch to look up the lyrics. Then, the lyrics will be input into the Watson tone analyzer and the tone of the song will be determined. We then return a playlist of their “loved” songs that match the tone of music they selected and embed a youtube video of the song in the output. The database will keep track of which last.fm usernames the user has called and save the playlist in order to reduce the number of API calls and time spent waiting for them. If the user has recently "loved" new songs on last.fm, then he or she can use the "Force Update" checkbox to make the app request data from the APIs even if the last.fm user is already stored in the database.
 
 ## Launch Instructions
 
-1. Enter your terminal and go into the directory that you want to have this program in
+
+0. Enter your terminal and go into the directory that you want to have this program in
+1. Add the keys.txt file to the directory, obtained by contacting the PM (Jerome)
 2. Enter this command to clone our repo
 ```
 https://github.com/JFreud/jubilant-api-project.git
@@ -64,6 +66,15 @@ python app.py
 * [`python2.7`](https://www.python.org/download/releases/2.7/)
 * `import requests, json`
   * requires `pip install requests`
+
+## Bugs and Issues
+* When you try to press pause in the bottom left of the embedded youtube video, the carousel moves to the left instead. Pausing is still possible by pressing on the video.
+* The embedded YouTube video is the first search result, meaning it may not be representative of the song desired.
+* The embedded YouTube video continues playing when the user moves on to the next one (it's not a bug, it's a feature!).
+* The app doesn't look at Watson's score for a tone, it adds it to the playlist even if it isn't a near match (in the interest of keeping the playlist populated).
+* Since Watson only looks at the lyrics, the song itself may have a different tone from the one requested.
+* Only the last 50 loved last.fm songs are available, some get thrown out because the free version of Musixmatch doesn't have the lyrics, and only the music that matches the tone requested are in a playlist. As a result, playlists can often be sparse and sometimes repeated in multiple tones.
+* lastfm API has a quota of 5 calls per second averaged over a 5 minute period
 
 ## File Structure
 ```
