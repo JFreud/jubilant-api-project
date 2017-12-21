@@ -13,7 +13,7 @@ Our website will take a user input on how they’re feeling/what mood of music t
 1. Add the keys.txt file to the directory, obtained by contacting the PM (Jerome)
 2. Enter this command to clone our repo
 ```
-https://github.com/JFreud/jubilant-api-project.git
+git clone https://github.com/JFreud/jubilant-api-project.git
 ```
 3. Run your virtualenv from wherever you have it (if needed)
 ```
